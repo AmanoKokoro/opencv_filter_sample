@@ -1,11 +1,9 @@
-#ifndef _MAIN_H
-#define _MAIN_H
+#ifndef _MAIN_HPP
+#define _MAIN_HPP
 
 /*Include Library*/
 #include <iostream>
-#include <string>
-#include <cmath>
-#include <opencv2/opencv.hpp>
+#include "operation.hpp"
 //#include <opencv2/highgui/highgui_c.h>
 
-#endif // !_MAIN_H
+#endif // !_MAIN_HPP
