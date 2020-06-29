@@ -1,5 +1,7 @@
-#include "main.hpp"
+#define _CRT_SECURE_NO_WARNINGS
+#define _USE_MATH_DEFINE
 
+#include "main.hpp"
 
 //Name space
 using namespace cv;
@@ -29,8 +31,22 @@ int main(void) {
 
 	/*Operation*/
 	Mat op = Mat::ones(3, 3, CV_32F) / 9.0;	//全要素が1の3*3フィルタを生成 9で割る (全要素が1/9の3*3行列)
+
+	//ガウシアンフィルタ
+	op.at<float>(1, 1) = 4 / 16.0;
+	op.at<float>(1, 0) = 2 / 16.0;
+	op.at<float>(0, 1) = 2 / 16.0;
+	op.at<float>(2, 1) = 2 / 16.0;
+	op.at<float>(1, 2) = 2 / 16.0;
+
 	filter2D(img_src, img_dst, -1, op);
 	convertScaleAbs(img_dst, img_dst, 1, 0);
+
+	imshow(win_src, img_src);
+	imshow(win_dst, img_dst);
+
+	imwrite(file_dst, img_dst);
+	waitKey(-1);
 
 	return 0;
 }
