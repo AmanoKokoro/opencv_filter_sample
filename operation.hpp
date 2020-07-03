@@ -22,7 +22,8 @@ class Operation {
 
         Operation(std::string input_path);
         ~Operation();
-        void set(float num = 1.0);
+        void set_ones(float num = 1.0);
+        void set_zeros();
         void smoothing(std::string file_dst);
         void weightedAverage(std::string file_dst);
         void differential(std::string file_dst, bool Vertical);

@@ -9,26 +9,28 @@ Operation::Operation(string input_path) {
 
     if (!img_src.data) {
         throw runtime_error("Input error!!");
-	}
-
-    set();
+	} // F_open
 }
 
 Operation::~Operation() {
 
 }
 
-void Operation::set(float num) {
-    op = Mat::ones(3, 3, CV_32F) / 9.0 * num;	//全要素が1の3*3フィルタを生成 9で割る (全要素が1/9の3*3行列)
+void Operation::set_ones(float num) {
+    op = Mat::ones(3, 3, CV_32F) / num;	//全要素が1の3*3フィルタを生成
+}
+
+void Operation::set_zeros(){
+    op = Mat::zeros(3, 3, CV_32F);	//全要素が0の3*3フィルタを生成
 }
 
 void Operation::smoothing(string file_dst) {
-    set();
+    set_ones(9);
     filtering(file_dst);
 }
 
 void Operation::weightedAverage(string file_dst) {
-    set();
+    set_ones(16);
     op.at<float>(1,1) = 4/16.0;
     op.at<float>(1,0) = 2/16.0;
     op.at<float>(0,1) = 2/16.0;
@@ -39,7 +41,7 @@ void Operation::weightedAverage(string file_dst) {
 }
 
 void Operation::differential(string file_dst, bool Vertical) {
-    set();
+    set_zeros();
 
     if (Vertical == true) {
         op.at<float>(1,1) = -1;
@@ -57,23 +59,23 @@ void Operation::differential(string file_dst, bool Vertical) {
 }
 
 void Operation::sobel(string file_dst, bool Vertical) {
-    set(); 
+    set_zeros();
 
     if (Vertical == true) {
-        op.at<float>(0, 0) = -1;
-        op.at<float>(0, 1) = -2;
-        op.at<float>(0, 2) = -1;
-        op.at<float>(2, 0) = 1;
-        op.at<float>(2, 1) = 2;
-        op.at<float>(2, 2) = 1;
+        op.at<float>(0, 0) = 1;
+        op.at<float>(0, 1) = 2;
+        op.at<float>(0, 2) = 1;
+        op.at<float>(2, 0) = -1;
+        op.at<float>(2, 1) = -2;
+        op.at<float>(2, 2) = -1;
 
     } else if (Vertical == false) {
         op.at<float>(0, 0) = -1;
         op.at<float>(1, 0) = -2;
-        op.at<float>(2, 0) = -2;
+        op.at<float>(2, 0) = -1;
         op.at<float>(0, 2) = 1;
         op.at<float>(1, 2) = 2;
-        op.at<float>(2, 2) = 0;
+        op.at<float>(2, 2) = 1;
 
     } else {
         cout << "error\n";
@@ -83,14 +85,14 @@ void Operation::sobel(string file_dst, bool Vertical) {
 }
 
 void Operation::laplacian(string file_dst) {
-    set();
+    set_ones();
     op.at<float>(1, 1) = -8;
     filtering(file_dst);
 }
 
 void Operation::sharpen(string file_dst) {
-    float k = 5.0;
-    set(k);
+    float k = 1/(-5.0);
+    set_ones(k);
     filtering(file_dst);
 }
 
