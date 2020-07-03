@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/mnt/d/Code/Cpp/opencvwork/main.cpp
-main.hpp
-/mnt/d/Code/Cpp/opencvwork/main.hpp
-
-/mnt/d/Code/Cpp/opencvwork/main.hpp
-iostream
--
-operation.hpp
-/mnt/d/Code/Cpp/opencvwork/operation.hpp
-
 /mnt/d/Code/Cpp/opencvwork/operation.cpp
 string
 -

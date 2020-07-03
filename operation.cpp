@@ -93,7 +93,13 @@ void Operation::laplacian(string file_dst) {
 void Operation::sharpen(string file_dst) {
     float k = 1/(-5.0);
     set_ones(k);
+    op.at<float>(1, 1) = 1 + 8 / (-k);
     filtering(file_dst);
+
+    // float k = 5.0;
+    // op = Mat::ones(3, 3, CV_32F) * (-k);
+    // op.at<float>(1, 1) = 1 + 8 * k;
+    // filtering(file_dst);
 }
 
 void Operation::filtering(string file_dst) {
